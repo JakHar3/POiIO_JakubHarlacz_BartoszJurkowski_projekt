@@ -1,2 +1,1 @@
-﻿  TGra.cpp
-  familiada.vcxproj -> C:\Users\barto\source\repos\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\x64\Debug\familiada.exe
+﻿C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(473,5): error MSB8020: Nie można odnaleźć narzędzi kompilacji dla Visual Studio 2022 (zestaw narzędzi platformy = „v143”). Aby wykonać kompilację przy użyciu narzędzi kompilacji v143, zainstaluj narzędzia kompilacji Visual Studio 2022. Możesz też wykonać aktualizację do najnowszych narzędzi programu Visual Studio, wybierając menu Projekt lub klikając prawym przyciskiem myszy rozwiązanie, a następnie wybierając polecenie „Wskaż ponownie rozwiązanie...”.

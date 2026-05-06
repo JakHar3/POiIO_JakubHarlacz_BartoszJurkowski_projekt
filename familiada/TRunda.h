@@ -14,5 +14,7 @@ public:
     bool czy_koniec();
     int suma_punktow();
 
+    void sczytaj_pytanie();
+
     void wyswietl_stan();
 };

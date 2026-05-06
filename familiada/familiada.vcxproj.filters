@@ -21,9 +21,27 @@
     <ClCompile Include="TPytanie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TDruzyna.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TRunda.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TGra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TPytanie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TDruzyna.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TRunda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TGra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,18 @@
+# Visual Studio
+.vs/
+*.user
+*.VC.db
+
+# Build files
+Debug/
+Release/
+x64/
+x86/
+
+# C++ objects
+*.obj
+*.exe
+*.pdb
+
+# Cache
+*.vsidx

@@ -7,6 +7,13 @@ TPytanie::TPytanie(std::string tresc,
     : tresc(tresc), odpowiedzi(odpowiedzi), punkty(punkty) {
 }
 
+TPytanie::TPytanie()
+{
+    tresc = "";
+    odpowiedzi = {};
+    punkty = {};
+}
+
 void TPytanie::wyswietl() {
     std::cout << tresc << std::endl;
     for (size_t i = 0; i < odpowiedzi.size(); i++) {

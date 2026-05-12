@@ -14,6 +14,7 @@ private:
 public:
 	TPytanie(std::string tresc, std::vector<std::string> odpowiedzi,
 		std::vector<int> punkty);
+	TPytanie();
 
 	void wyswietl();
 

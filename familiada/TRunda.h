@@ -27,17 +27,15 @@ private:
     
 
 public:
-   TRunda(Pytanie& p);
+    TRunda();
 
     bool zgadnij(std::string& odp);
     bool czy_koniec();
     int suma_punktow();
 
-    
-
     void wyswietl_stan();
-};
 
-void sczytaj_pytanie(vector<Pytanie>& baza);
-Pytanie losuj_pytanie(vector<Pytanie>& baza);
-void wyswietl_pytanie(Pytanie& p);
+    void sczytaj_pytanie(vector<Pytanie>& baza);
+    Pytanie losuj_pytanie(vector<Pytanie>& baza);
+    void wyswietl_pytanie(Pytanie& p);
+};

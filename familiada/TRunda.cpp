@@ -6,14 +6,18 @@
 #include "TPytanie.h"
 
 using namespace std;
-//TRunda::TRunda(TPytanie& p)
+
+TRunda::TRunda()
+{
+    ;
+}
 
 //bool TRunda::zgadnij(std::string& odp);
 //bool TRunda::czy_koniec();
 //int TRunda::suma_punktow();
 
 //void TRunda::wyswietl_stan();
-void sczytaj_pytanie(vector<Pytanie>& baza) {
+void TRunda::sczytaj_pytanie(vector<Pytanie>& baza) {
     //Powyższa linijka pozwala na zapisanie pytań
     //Otwieramy plik
     ifstream plik("baza_pytan.txt");
@@ -61,7 +65,7 @@ void sczytaj_pytanie(vector<Pytanie>& baza) {
     }
     plik.close();
 }
-Pytanie losuj_pytanie(vector<Pytanie>& baza) 
+Pytanie TRunda::losuj_pytanie(vector<Pytanie>& baza) 
 {
     int losowy_idx = rand() % baza.size();
     return baza[losowy_idx];
@@ -71,7 +75,7 @@ Pytanie losuj_pytanie(vector<Pytanie>& baza)
     }
     
 };
-void wyswietl_pytanie(Pytanie& p)
+void TRunda::wyswietl_pytanie(Pytanie& p)
 {
     cout << "\n===================" << endl;
     cout << "       Pytanie     " << endl;

@@ -1,0 +1,141 @@
+Więcej niż jeden przedmiot znajdziemy w...?
+Sklepie:35
+Szkole:22
+Plecaku:15
+Muzeum:12
+Lodówce:9
+---
+Coś co kładziemy na chleb?
+Masło:42
+Szynka:25
+Ser:18
+Dżem:8
+Ogórek:7
+---
+Jaki przedmiot kojarzy się z lekarzem?
+Stetoskop:48
+Strzykawka:18
+Fartuch:15
+Termometr:10
+Recepta:9
+---
+Co można zbierać w lesie?
+Grzyby:52
+Jagody:22
+Drewno:12
+Szyszki:8
+Kwiaty:6
+---
+Coś, co posiada koła?
+Samochód:40
+Rower:25
+Wózek:14
+Pociąg:11
+Traktor:10
+---
+Zwierzę na literę "K"?
+Kot:45
+Koń:28
+Krowa:15
+Królik:7
+Kangur:5
+---
+Część garderoby, którą nosimy zimą?
+Czapka:35
+Szalik:24
+Rękawiczki:18
+Kurtka:15
+Rajtuzy:8
+---
+Co kojarzy się z wakacjami nad morzem?
+Piasek:38
+Słońce:24
+Woda:16
+Parawany:12
+Muszelki:10
+---
+Dyscyplina sportowa z użyciem piłki?
+Piłka Nożna:50
+Siatkówka:20
+Koszykówka:15
+Piłka Ręczna:10
+Tenis:5
+---
+Co najczęściej gubimy?
+Klucze:42
+Telefon:22
+Portfel:16
+Okulary:12
+Skarpetki:8
+---
+Jaki owoc trzeba obrać przed zjedzeniem?
+Banan:40
+Pomarańcza:30
+Kiwi:15
+Ananas:10
+Arbuz:5
+---
+Kto nosi mundur?
+Żołnierz:38
+Policjant:25
+Strażak:18
+Listonosz:11
+Ksiądz:8;
+---
+Instrument strunowy?
+Gitara:48
+Skrzypce:25
+Wiolonczela:12
+Harfa:9
+Kontrabas:6
+---
+Co dodajemy do herbaty?
+Cukier:40
+Cytryna:32
+Miód:15
+Sok:8
+Mleko:5
+---
+Jaki przedmiot jest w każdej kuchni?
+Lodówka:34
+Kuchenka:26
+Garnek:22
+Zlew:18
+Czajnik:10
+---
+Zawód, w którym pracuje się w nocy?
+Lekarz:32
+Kierowca:25
+Piekarz:18
+Ochroniarz:15
+Policjant:10
+---
+Coś, co jest czerwone?
+Pomidor:30
+Krew:22
+Róża:18
+Serce:15
+Kwiatek:10
+---
+Co czytamy?
+Książki:45
+Gazety:25
+Wiadomości:15
+Komiksy:10
+Instrukcje:5
+---
+Środek transportu miejskiego?
+Autobus:42
+Tramwaj:30
+Metro:15
+Rower:8
+Taksówka:5
+---
+Co jest słodkie?
+Cukier:38
+Czekolada:25
+Miód:18
+Cukierki:12
+Ciasto:7
+
+

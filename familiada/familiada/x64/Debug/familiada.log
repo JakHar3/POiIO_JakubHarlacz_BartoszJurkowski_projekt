@@ -1,5 +1,5 @@
 ﻿  familiada.cpp
-C:\Users\barto\source\repos\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\familiada.cpp(18,15): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\barto\source\repos\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\familiada.cpp(19,15): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
   TGra.cpp
   TPytanie.cpp
   TRunda.cpp

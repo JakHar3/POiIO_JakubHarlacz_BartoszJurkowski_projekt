@@ -4,21 +4,27 @@
 
 using namespace std;
 
+struct TOdpowiedz
+{
+	string tekst;
+	int punkty;
+};
+
 class TPytanie {
 private:
-	std::string tresc;
-	std::vector<std::string> odpowiedzi;
-	std::vector<int> punkty;
+	string tresc;
+	vector<TOdpowiedz> odpowiedzi;
 
 
 public:
-	TPytanie(std::string tresc, std::vector<std::string> odpowiedzi,
-		std::vector<int> punkty);
+	TPytanie(string tresc, vector<TOdpowiedz> odpowiedzi);
 	TPytanie();
 
 	void wyswietl();
 
-	std::string get_tresc();
-	std::vector<std::string> get_odpowiedzi();
-	std::vector<int> get_punkty();
+	string get_tresc();
+	void set_tresc(string t);
+	void dodaj_odpowiedz(TOdpowiedz o);
+
+	std::vector<TOdpowiedz> get_odpowiedzi();
 };

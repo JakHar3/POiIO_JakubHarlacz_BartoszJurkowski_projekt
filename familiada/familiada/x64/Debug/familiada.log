@@ -1,3 +1,2 @@
-﻿  familiada.cpp
-C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\familiada.cpp(25,15): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
-  familiada.vcxproj -> C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\x64\Debug\familiada.exe
+﻿  TRunda.cpp
+  familiada.vcxproj -> C:\Users\barto\source\repos\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\x64\Debug\familiada.exe

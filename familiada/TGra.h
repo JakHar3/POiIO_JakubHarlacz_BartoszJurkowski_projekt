@@ -6,16 +6,15 @@
 
 class TGra {
 private:
-    std::vector<TDruzyna> druzyny;
-    std::vector<TPytanie> pytania;
+    vector<TPytanie> baza;
 
-    int aktualne_pytanie = 0;
+    TDruzyna druzyna1;
+    TDruzyna druzyna2;
+
+    TRunda runda;
 
 public:
-    TGra(std::vector<TPytanie> pytania, std::vector<TDruzyna> druzyny);
+    TGra();
 
     void start();
-
-private:
-    void nastepna_runda();
 };

@@ -25,11 +25,15 @@ bool TRunda::zgadnij(string odp_gracza)
 
             punkty_rundy += odp[i].punkty;
 
+            system("cls");
+
             return true;
         }
     }
 
     liczba_bledow++;
+
+    system("cls");
 
     return false;
 }
@@ -53,6 +57,11 @@ bool TRunda::czy_koniec()
 int TRunda::get_suma_punktow()
 {
     return punkty_rundy;
+}
+
+int TRunda::get_liczba_bledow()
+{
+    return liczba_bledow;
 }
 
 //void TRunda::wyswietl_stan();

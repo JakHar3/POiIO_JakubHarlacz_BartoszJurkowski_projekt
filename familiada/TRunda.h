@@ -33,7 +33,9 @@ public:
 
     bool zgadnij(string odp_gracza);
     bool czy_koniec();
+
     int get_suma_punktow();
+    int get_liczba_bledow();
 
     void wyswietl_stan();
 

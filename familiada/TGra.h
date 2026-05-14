@@ -4,6 +4,10 @@
 #include "TPytanie.h"
 #include "TRunda.h"
 
+#include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
 class TGra {
 private:
     vector<TPytanie> baza;
@@ -17,4 +21,7 @@ public:
     TGra();
 
     void start();
+
+private:
+    // pomocnicze:
 };

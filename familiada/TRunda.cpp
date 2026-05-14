@@ -13,7 +13,7 @@ TRunda::TRunda()
     punkty_rundy = 0;
 }
 
-bool TRunda::zgadnij(string odp_gracza)
+int TRunda::zgadnij(string odp_gracza, bool licz_bledy)
 {
     vector<TOdpowiedz> odp = pytanie.get_odpowiedzi();
 
@@ -27,15 +27,15 @@ bool TRunda::zgadnij(string odp_gracza)
 
             system("cls");
 
-            return true;
+            return i;
         }
     }
 
-    liczba_bledow++;
+    if (licz_bledy)
+        liczba_bledow++;
 
-    system("cls");
 
-    return false;
+    return -1;
 }
 bool TRunda::czy_koniec()
 {
@@ -123,15 +123,6 @@ TPytanie TRunda::losuj_pytanie(vector<TPytanie>& baza)
     }
     
 };
-void TRunda::wyswietl_pytanie(Pytanie& p)
-{
-    cout << "\n===================" << endl;
-    cout << "       Pytanie     " << endl;
-    cout << "===================" << endl;
-    cout << "\n" << p.tresc << "\n" << endl;
-    cout << "Na tablicy jest " << p.odpowiedzi.size() << " odpowiedzi." << endl;
-    cout << "===================" << endl;
-}
 
 void TRunda::ustaw_pytanie(TPytanie p)
 {
@@ -148,9 +139,11 @@ void TRunda::ustaw_pytanie(TPytanie p)
     punkty_rundy = 0;
 }
 
-void TRunda::wyswietl_stan()
+void TRunda::wyswietl_stan(int numer_rundy, bool wyswietl_ilosc_bledow)
 {
+    system("cls");
     cout << endl;
+    cout << "=== RUNDA " << numer_rundy << " ===" << endl;
     cout << pytanie.get_tresc() << endl;
     cout << endl;
 
@@ -171,14 +164,36 @@ void TRunda::wyswietl_stan()
             cout << i + 1 << ". ??????" << endl;
         }
     }
-
-    cout << endl;
-    cout << "Bledy: ";
-
-    for (int i = 0; i < liczba_bledow; i++)
+    if (wyswietl_ilosc_bledow) // dla pojedynku nie wyświetlamy błędów
     {
-        cout << "X ";
+        cout << endl;
+        cout << "Bledy: ";
+
+        for (int i = 0; i < liczba_bledow; i++)
+        {
+            cout << "X ";
+        }
+    }
+    else
+    {
+        cout << endl;
+        cout << "Kto pierwszy ten lepszy (c/n): ";
     }
 
     cout << endl;
+}
+
+int TRunda::wartosc_odpowiedzi(string odp)
+{
+    vector<TOdpowiedz> odp_tab = pytanie.get_odpowiedzi();
+
+    for (int i = 0; i < odp_tab.size(); i++)
+    {
+        if (odp_tab[i].tekst == odp)
+        {
+            return odp_tab[i].punkty;
+        }
+    }
+
+    return 0;
 }

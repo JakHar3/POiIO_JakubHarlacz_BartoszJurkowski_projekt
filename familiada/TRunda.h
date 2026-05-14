@@ -7,17 +7,6 @@
 
 using namespace std;
 
-// te 2 struktury do wywalenia
-struct Odpowiedz
-{
-    string tekst;
-    int punkty;
-};
-struct Pytanie
-{
-    string tresc;
-    vector<Odpowiedz> odpowiedzi;
-};
 
 class TRunda {
 private:
@@ -31,17 +20,18 @@ private:
 public:
     TRunda();
 
-    bool zgadnij(string odp_gracza);
+    int zgadnij(string odp_gracza, bool licz_bledy = true);
     bool czy_koniec();
 
     int get_suma_punktow();
     int get_liczba_bledow();
 
-    void wyswietl_stan();
+    void wyswietl_stan(int number_rundy, bool wyswietl_ilosc_bledow = true);
 
     void sczytaj_pytanie(vector<TPytanie>& baza);
     TPytanie losuj_pytanie(vector<TPytanie>& baza);
-    void wyswietl_pytanie(Pytanie& p);
 
     void ustaw_pytanie(TPytanie p);
+
+    int wartosc_odpowiedzi(string odp);
 };

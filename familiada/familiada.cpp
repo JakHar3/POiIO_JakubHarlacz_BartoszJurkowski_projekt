@@ -9,6 +9,9 @@
 #include <Windows.h>
 #include "TGra.h"
 
+// do wczytywania plików dźwiękowych
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 using namespace std;
 

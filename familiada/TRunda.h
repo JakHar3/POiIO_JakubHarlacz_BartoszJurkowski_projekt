@@ -37,4 +37,6 @@ public:
     void wyswietl_stan_final(vector<string> odp_gracza1,
         vector<string> odp_gracza2, vector<vector<TOdpowiedz>> popr_odp_final,
         vector<int> pkt);
+private:
+    string normalizuj(string tekst);
 };

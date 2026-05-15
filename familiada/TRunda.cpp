@@ -19,7 +19,7 @@ int TRunda::zgadnij(string odp_gracza, bool licz_bledy)
 
     for (int i = 0; i < odp.size(); i++)
     {
-        if (odp[i].tekst == odp_gracza && !odkryte[i])
+        if ((normalizuj(odp[i].tekst) == normalizuj(odp_gracza)) && !odkryte[i])
         {
             odkryte[i] = true;
 
@@ -193,7 +193,7 @@ int TRunda::wartosc_odpowiedzi(string odp)
 
     for (int i = 0; i < odp_tab.size(); i++)
     {
-        if (odp_tab[i].tekst == odp)
+        if (normalizuj(odp_tab[i].tekst) == normalizuj(odp))
         {
             return odp_tab[i].punkty;
         }
@@ -250,4 +250,35 @@ void TRunda::wyswietl_stan_final(vector<string> odp_gracza1,
         }
     }
 
+}
+
+string TRunda::normalizuj(string tekst) // ignoruje polskie znaki i wielkość liter
+{
+    for (char& c : tekst)
+    {
+        c = tolower(c);
+    }
+
+    string wynik = "";
+
+    for (char c : tekst)
+    {
+        switch (c)
+        {
+        case 'ą': wynik += 'a'; break;
+        case 'ć': wynik += 'c'; break;
+        case 'ę': wynik += 'e'; break;
+        case 'ł': wynik += 'l'; break;
+        case 'ń': wynik += 'n'; break;
+        case 'ó': wynik += 'o'; break;
+        case 'ś': wynik += 's'; break;
+        case 'ż': wynik += 'z'; break;
+        case 'ź': wynik += 'z'; break;
+
+        default:
+            wynik += c;
+        }
+    }
+
+    return wynik;
 }

@@ -58,6 +58,9 @@ void TGra::start()
                 runda.wyswietl_stan(nr);
                 cout << "\nDobra odpowiedz!" << endl;
                 PlaySound(TEXT("poprawna_odp.wav"), NULL, SND_SYNC);
+
+                if(runda.czy_koniec())
+                    aktualna_druzyna->dodaj_punkty(runda.get_suma_punktow());
             }
             else
             {

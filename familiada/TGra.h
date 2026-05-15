@@ -24,4 +24,7 @@ public:
 
 private:
     // pomocnicze:
+    void pojedynek(TDruzyna*& aktualna_druzyna,
+        TDruzyna*& przeciwna_druzyna, int nr);
+    void start_final(TDruzyna* druzyna);
 };

@@ -197,3 +197,53 @@ int TRunda::wartosc_odpowiedzi(string odp)
 
     return 0;
 }
+
+void TRunda::wyswietl_stan_final(vector<string> odp_gracza1,
+    vector<string> odp_gracza2, vector<vector<TOdpowiedz>> popr_odp_final,
+    vector<int> pkt)
+{
+    system("cls");
+    cout << endl;
+    cout << pytanie.get_tresc() << endl;
+    cout << endl;
+
+    cout << "=== FINAŁ " << " ===" << endl;
+    cout << "\n=== GRACZ1 " << " ==" << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        if ((i < odp_gracza1.size()) && (i < pkt.size()))
+        {
+            if (pkt[i] < 10) // żeby się równo wyświetlało
+                cout << " ";
+            cout << pkt[i] << " " << odp_gracza1[i] << endl;
+        }
+        else if ((i < odp_gracza1.size()) && (i >= pkt.size()))
+        {
+            cout << "?? " << odp_gracza1[i] << endl;
+        }
+        else
+        {
+            cout << "?? ????????? " << endl;
+        }
+    }
+
+    cout << "\n=== GRACZ2 " << " ==" << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        if ((i < odp_gracza2.size()) && (i + 5 < pkt.size()))
+        {
+            if (pkt[i+5] < 10) // żeby się równo wyświetlało
+                cout << " ";
+            cout << pkt[i+5] << " " << odp_gracza2[i] << endl;
+        }
+        else if ((i < odp_gracza2.size()) && (i + 5 >= pkt.size()))
+        {
+            cout << "?? " << odp_gracza2[i] << endl;
+        }
+        else
+        {
+            cout << "?? ????????? " << endl;
+        }
+    }
+
+}

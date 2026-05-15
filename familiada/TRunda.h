@@ -30,8 +30,11 @@ public:
 
     void sczytaj_pytanie(vector<TPytanie>& baza);
     TPytanie losuj_pytanie(vector<TPytanie>& baza);
-
     void ustaw_pytanie(TPytanie p);
 
     int wartosc_odpowiedzi(string odp);
+
+    void wyswietl_stan_final(vector<string> odp_gracza1,
+        vector<string> odp_gracza2, vector<vector<TOdpowiedz>> popr_odp_final,
+        vector<int> pkt);
 };

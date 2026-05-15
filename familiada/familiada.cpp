@@ -36,7 +36,5 @@ int main()
     TGra gra;
     gra.start();
 
-
-
 }
 

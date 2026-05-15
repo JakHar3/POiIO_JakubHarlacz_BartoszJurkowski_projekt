@@ -116,7 +116,11 @@ void TRunda::sczytaj_pytanie(vector<TPytanie>& baza) {
 TPytanie TRunda::losuj_pytanie(vector<TPytanie>& baza) 
 {
     int losowy_idx = rand() % baza.size();
-    return baza[losowy_idx];
+    TPytanie pytanie = baza[losowy_idx];
+
+    baza.erase(baza.begin() + losowy_idx);
+
+    return pytanie;
     if (baza.empty()) 
     {
         return TPytanie();

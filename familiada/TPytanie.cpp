@@ -1,7 +1,9 @@
 #include "TPytanie.h"
 #include <iostream>
 
-TPytanie::TPytanie(string tresc, vector<TOdpowiedz> odpowiedzi)
+using namespace std;
+
+TPytanie::TPytanie(string tresc,vector<TOdpowiedz> odpowiedzi)
 {
     this->tresc = tresc;
     this->odpowiedzi = odpowiedzi;

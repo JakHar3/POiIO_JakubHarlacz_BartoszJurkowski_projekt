@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -9,32 +9,33 @@
 #include <Windows.h>
 #include "TGra.h"
 
+using namespace std; */
+
 // do wczytywania plików dźwiękowych
-#include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
 
-using namespace std;
+#include "MyForm.h"
+using namespace System;
+using namespace System::Windows::Forms;
 
-int main()
+/*int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);  //ustawia język pol, plik txt jest UTF8
     srand(time(0)); //losowanie innego pytania
 
-    /*
-    vector<Pytanie> baza;
-    TRunda runda1;
-    runda1.sczytaj_pytanie(baza);
-    
-    if (!baza.empty())
-    {
-        Pytanie aktualne = runda1.losuj_pytanie(baza);
-        runda1.wyswietl_pytanie(aktualne);
-    }
-    */
 
     TGra gra;
     gra.start();
 
+} */
+[STAThreadAttribute]
+
+int main(array<String^>^ args)
+{
+    Application::EnableVisualStyles();
+    Application::SetCompatibleTextRenderingDefault(false);
+    familiada::MyForm form;
+    Application::Run(% form);
+    return 0;
 }
 

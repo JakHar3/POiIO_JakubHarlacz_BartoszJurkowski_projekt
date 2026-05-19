@@ -2,28 +2,28 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+//using namespace std;
 
 struct TOdpowiedz
 {
-	string tekst;
+	std::string tekst;
 	int punkty;
 };
 
 class TPytanie {
 private:
-	string tresc;
-	vector<TOdpowiedz> odpowiedzi;
+	std::string tresc;
+	std::vector<TOdpowiedz> odpowiedzi;
 
 
 public:
-	TPytanie(string tresc, vector<TOdpowiedz> odpowiedzi);
+	TPytanie(std::string tresc, std::vector<TOdpowiedz> odpowiedzi);
 	TPytanie();
 
 	void wyswietl();
 
-	string get_tresc();
-	void set_tresc(string t);
+	std::string get_tresc();
+	void set_tresc(std::string t);
 	void dodaj_odpowiedz(TOdpowiedz o);
 
 	std::vector<TOdpowiedz> get_odpowiedzi();

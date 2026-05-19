@@ -10,7 +10,7 @@
 
 class TGra {
 private:
-    vector<TPytanie> baza;
+    std::vector<TPytanie> baza;
 
     TDruzyna druzyna1;
     TDruzyna druzyna2;

@@ -5,13 +5,13 @@
 #include <vector>
 #include "TPytanie.h"
 
-using namespace std;
+//using namespace std;
 
 
 class TRunda {
 private:
     TPytanie pytanie;
-    vector<bool> odkryte;
+    std::vector<bool> odkryte;
 
     int liczba_bledow;
     int punkty_rundy;
@@ -20,7 +20,7 @@ private:
 public:
     TRunda();
 
-    int zgadnij(string odp_gracza, bool licz_bledy = true);
+    int zgadnij(std::string odp_gracza, bool licz_bledy = true);
     bool czy_koniec();
 
     int get_suma_punktow();
@@ -28,15 +28,15 @@ public:
 
     void wyswietl_stan(int number_rundy, bool wyswietl_ilosc_bledow = true);
 
-    void sczytaj_pytanie(vector<TPytanie>& baza);
-    TPytanie losuj_pytanie(vector<TPytanie>& baza);
+    void sczytaj_pytanie(std::vector<TPytanie>& baza);
+    TPytanie losuj_pytanie(std::vector<TPytanie>& baza);
     void ustaw_pytanie(TPytanie p);
 
-    int wartosc_odpowiedzi(string odp);
+    int wartosc_odpowiedzi(std::string odp);
 
-    void wyswietl_stan_final(vector<string> odp_gracza1,
-        vector<string> odp_gracza2, vector<vector<TOdpowiedz>> popr_odp_final,
-        vector<int> pkt);
+    void wyswietl_stan_final(std::vector<std::string> odp_gracza1,
+        std::vector<std::string> odp_gracza2, std::vector<std::vector<TOdpowiedz>> popr_odp_final,
+        std::vector<int> pkt);
 private:
-    string normalizuj(string tekst);
+    std::string normalizuj(std::string tekst);
 };

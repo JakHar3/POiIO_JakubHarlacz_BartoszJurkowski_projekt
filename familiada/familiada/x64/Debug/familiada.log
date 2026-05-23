@@ -1,24 +1,6 @@
 ﻿  familiada.cpp
-  MyForm.cpp
-  TDruzyna.cpp
-  TGra.cpp
-  TPytanie.cpp
-  TRunda.cpp
-  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
-  Generowanie kodu...
+C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\MyForm.h(64,61): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+  (kompilowanie pliku źródłowego „familiada.cpp”)
+  
   familiada.obj : napotkano moduł MSIL; konsolidowanie przyrostowe jest wyłączone dla modułów MSIL; zostanie wykonana pełna konsolidacja
   familiada.vcxproj -> C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\x64\Debug\familiada.exe
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: Nastąpiło nieoczekiwane niepowodzenie zadania „METAGEN”.
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: System.IO.FileLoadException: Nie można załadować pliku lub zestawu 'familiada.exe' lub jednej z jego zależności. Zasady kontroli aplikacji zablokowały ten plik. (Wyjątek od HRESULT: 0x800711C7)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: Nazwa pliku: 'familiada.exe' ---> System.Runtime.InteropServices.COMException (0x800711C7): Zasady kontroli aplikacji zablokowały ten plik. (Wyjątek od HRESULT: 0x800711C7)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: 
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w System.Reflection.AssemblyName.nGetFileInformation(String s)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.CPPTasks.MetaDumper.GenerateAssemblyMeta(String theModule, String refSearchPath)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.CPPTasks.MetaDumper.GenerateAssemblyMeta(String theModule, String refSearchPath)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.CPPTasks.AsmMeta.CreateMeta(String assemblyFileName, String searchPath, String metaFileName)
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.CPPTasks.METAGEN.Execute()
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.BackEnd.TaskExecutionHost.Execute()
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018:    w Microsoft.Build.BackEnd.TaskBuilder.<ExecuteInstantiatedTask>d__26.MoveNext()
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: 
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.MetaGen.targets(52,5): warning MSB4018: 

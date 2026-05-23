@@ -7,6 +7,7 @@
 #include "TDruzyna.h"
 #include "windows.h"
 #include <mmsystem.h>
+#include <ctime>
 #pragma comment(lib, "winmm.lib")
 
 
@@ -59,7 +60,8 @@ namespace familiada {
 		bool tura_czerownych; // true = czerowni, false = niebiescy
 	private: System::String^ stdToSystemStr(std::string stdStr)
 	{
-		return gcnew System::String(stdStr.c_str());
+		// wyœwietlanie polskich znaków UTF-8
+		return gcnew System::String(stdStr.c_str(),0,stdStr.length(),System::Text::Encoding::UTF8);
 	}
 	private: System::Windows::Forms::Label^ labelPytanie;
 	private: System::Windows::Forms::Label^ labelOdp1;
@@ -112,7 +114,7 @@ namespace familiada {
 			this->labelPytanie->AutoSize = true;
 			this->labelPytanie->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->labelPytanie->Location = System::Drawing::Point(183, 33);
+			this->labelPytanie->Location = System::Drawing::Point(123, 36);
 			this->labelPytanie->Name = L"labelPytanie";
 			this->labelPytanie->Size = System::Drawing::Size(389, 29);
 			this->labelPytanie->TabIndex = 0;
@@ -269,6 +271,9 @@ private: System::Void UruchomNowaRunde() {
 		textBoxOdpowiedz->Text = "";
 	}
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		//losowe pytanie
+		srand(static_cast<unsigned int>(time(0)));
+		
 		// Tworzymy nowe obiekty w pamieci:
 		baza_pytan = new std::vector<TPytanie>();
 		runda_aktualna = new TRunda();

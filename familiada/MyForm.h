@@ -39,20 +39,25 @@ namespace familiada {
 		/// </summary>
 		~MyForm()
 		{
+			//usuwamy obiekty z pamieci przy zamknieciu okna
+			if (baza_pytan) delete baza_pytan;
+			if (runda_aktualna) delete runda_aktualna;
+			if (pytanie_aktualne) delete pytanie_aktualne;
+
 			if (components)
 			{
 				delete components;
 			}
 		}
 	private:
-		std::vector<TPytanie> baza_pytan;
-		TRunda runda_aktualna;
-		TPytanie pytanie_aktualne;
+		std::vector<TPytanie>* baza_pytan;
+		TRunda* runda_aktualna;
+		TPytanie* pytanie_aktualne;
 		int punkty_czerwoni;
 		int punkty_niebiescy;
 		int numer_rundy;
 		bool tura_czerownych; // true = czerowni, false = niebiescy
-	private: System::String^ stdToSystem(std::string stdStr)
+	private: System::String^ stdToSystemStr(std::string stdStr)
 	{
 		return gcnew System::String(stdStr.c_str());
 	}
@@ -243,13 +248,14 @@ private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void labelPunktyDruzyna1_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void UruchomNowaRunde() {
-		if (baza_pytan.empty()) return;
+		if (baza_pytan->empty()) return;
+		
+		delete runda_aktualna;
+		runda_aktualna = new TRunda();
+		*pytanie_aktualne = runda_aktualna->losuj_pytanie(*baza_pytan);
+		runda_aktualna->ustaw_pytanie(*pytanie_aktualne);
 
-		runda_aktualna = TRunda();
-		pytanie_aktualne = runda_aktualna.losuj_pytanie(baza_pytan);
-		runda_aktualna.ustaw_pytanie(pytanie_aktualne);
-
-		labelPytanie->Text = "Runda " + numer_rundy + ": " + stdToSystemStr(pytanie_aktualne.get_tresc());
+		labelPytanie->Text = "Runda " + numer_rundy + ": " + stdToSystemStr(pytanie_aktualne->get_tresc());
 
 		labelOdp1->Text = "1. -------------------";
 		labelOdp2->Text = "2. -------------------";
@@ -263,6 +269,11 @@ private: System::Void UruchomNowaRunde() {
 		textBoxOdpowiedz->Text = "";
 	}
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		// Tworzymy nowe obiekty w pamieci:
+		baza_pytan = new std::vector<TPytanie>();
+		runda_aktualna = new TRunda();
+		pytanie_aktualne = new TPytanie();
+
 		// Zerujemy stan pocz¹tkowy
 		punkty_czerwoni = 0;
 		punkty_niebiescy = 0;
@@ -270,8 +281,8 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 		tura_czerownych = true; // zaczna czerowni
 
 		// Szczytanie bazy pytan
-		runda_aktualna.sczytaj_pytanie(baza_pytan);
-		if (!baza_pytan.empty()) {
+		runda_aktualna->sczytaj_pytanie(*baza_pytan);
+		if (!baza_pytan->empty()) {
 			UruchomNowaRunde();
 		}
 		else {
@@ -288,11 +299,11 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
 
 		if (odpGracza.empty()) return;
-		int indeksOdpowiedzi = runda_aktualna.zgadnij(odpGracza, true);
+		int indeksOdpowiedzi = runda_aktualna->zgadnij(odpGracza, true);
 
 		if (indeksOdpowiedzi != -1) {
 			PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
-			std::vector<TOdpowiedz> listaOdp = pytanie_aktualne.get_odpowiedzi();
+			std::vector<TOdpowiedz> listaOdp = pytanie_aktualne->get_odpowiedzi();
 			std::string tekstOdp = listaOdp[indeksOdpowiedzi].tekst + " (" + std::to_string(listaOdp[indeksOdpowiedzi].punkty) + " pkt";
 			System::String^ wyswietl_odp = stdToSystemStr(tekstOdp);
 
@@ -314,14 +325,14 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 			}
 		}
 		else {
-			PlaySound(TEXT("blad.vaw"), NULL, SND_ASYNC);
-			int bledy = runda_aktualna.get_liczba_bledow();
+			PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
+			int bledy = runda_aktualna->get_liczba_bledow();
 			labelBledy->Text = "B³êdy w rundzie: " + bledy;
 			tura_czerownych = !tura_czerownych; // zmiana tury po b³êdzue
 		}
 		textBoxOdpowiedz->Text = "";
 
-		if (runda_aktualna.czy_koniec) || runda_aktualna.get_liczba_bledow() >= 3 {
+		if (runda_aktualna->czy_koniec() || runda_aktualna->get_liczba_bledow() >= 3) {
 			MessageBox::Show("Koniec rundy " + numer_rundy + "!", "Podsumowanie", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 			numer_rundy++;

@@ -415,9 +415,46 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 						czy_tryb_finalowy = false;
 						int suma_finalowa = 0;
 
-						System::String^ podsumowanie_tekst 
+						System::String^ podsumowanie_tekst = "--- WYNIKI WIELKIEGO FINA£U ---\n\n";
+						
+						for (int i = 0;i < 5;i++)
+						{
+							TPytanie p = (*pytania_finalu)[i];
+							runda_aktualna->ustaw_pytanie(p);
+							int pkt1 = runda_aktualna->wartosc_odpowiedzi((*odpowiedzi_gracz1)[i]);
+							int pkt2 = runda_aktualna->wartosc_odpowiedzi((*odpowiedzi_gracz2)[i]);
+							suma_finalowa += pkt1 + pkt2;
+							podsumowanie_tekst += "Pytanie " + (i + 1) + ": " + stdToSystemStr(p.get_tresc()) + "\n";
+							podsumowanie_tekst += "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[i]) + " (" + pkt1 + " pkt)\n";
+							podsumowanie_tekst += "G2: " + stdToSystemStr((*odpowiedzi_gracz2)[i]) + " (" + pkt2 + " pkt)\n";
+						}
+						
+						//Wyœwietlanie wyników na planszy gry
+						labelOdp1->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[0]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[0]);
+						labelOdp2->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[1]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[1]);
+						labelOdp3->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[2]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[2]);
+						labelOdp4->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[3]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[3]);
+						labelOdp5->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[4]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[4]);
+
+						labelPunktyDruzyna1->Text = "SUMA PUNKTÓW FINA£U: " + suma_finalowa;
+
+						if (suma_finalowa >= 200)
+						{
+							PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
+							MessageBox::Show(podsumowanie_tekst + "\nWYGRANA! Zdobyliœcie " + suma_finalowa + " punktów! Nagroda g³ówna jest wasza!", "FINA£ WYGRANY", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+						}
+						else {
+							PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
+							MessageBox::Show(podsumowanie_tekst + "\nPRZEGRANA! Zdobyliœcie tylko " + suma_finalowa + " punktów. Do 200 zabrak³o " + (200 - suma_finalowa) + ".", "FINA£ PRZEGRANY", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+						}
+						//reset i powrót do normalnej gry
+						numer_rundy = 1;
+						punkty_czerwoni = 0;
+						punkty_niebiescy = 0;
+						UruchomNowaRunde();
 					}
 				}
+				return;
 		}
 
 		// LOGIKA ZWYK£EJ RUNDY

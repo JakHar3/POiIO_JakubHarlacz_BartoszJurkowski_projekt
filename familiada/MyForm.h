@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "TGra.h"
 #include "TRunda.h"
 #include "TPytanie.h"
 #include "TDruzyna.h"
@@ -66,11 +65,12 @@ namespace familiada {
 		bool czy_tryb_finalowy;
 		int aktualny_gracz_finalu;
 		int numer_pytania_finalu;
+		// Dodanie zmiennych aby dzia³a³ mechanizm kradzie¿y
 
 		std::vector<std::string>* odpowiedzi_gracz1;
 		std::vector<std::string>* odpowiedzi_gracz2;
 		std::vector<int> * punkty_finalowe;
-		std::vector<TPytanie>* punkty_finalu;
+		std::vector<TPytanie>* pytania_finalu;
 
 	private: System::String^ stdToSystemStr(std::string stdStr)
 	{
@@ -304,7 +304,7 @@ private: System::Void UruchomWielkiFinal() {
 			}
 		}
 	}
-	MessageBox::Show("Rozpoczynamy WIELKI FINA£!\nZapraszamy Gracza 1!" "Fina³", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	MessageBox::Show("Rozpoczynamy WIELKI FINA£!\nZapraszamy Gracza 1!", "Fina³", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 	labelOdp1->Text = "Pytanie 1: -------";
 	labelOdp2->Text = "Pytanie 2: -------";
@@ -341,7 +341,7 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 		odpowiedzi_gracz1 = new std::vector<std::string>();
 		odpowiedzi_gracz2 = new std::vector<std::string>();
 		punkty_finalowe = new std::vector<int>();
-		pytanie_finalu = new std::vector<TPytanie>();
+		pytania_finalu = new std::vector<TPytanie>();
 		// Szczytanie bazy pytan
 		runda_aktualna->sczytaj_pytanie(*baza_pytan);
 		if (!baza_pytan->empty()) {
@@ -356,14 +356,17 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 
 		//Konwersja System::String na std::string
 		using namespace System::Runtime::InteropServices;
-		const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(sysOdp)).ToPointer();
-		std::string odpGracza(chars);
-		Marshal::FreeHGlobal(IntPtr((void*)chars));
+		std::string odpGracza = "";
+		if (!System::String::IsNullOrEmpty(sysOdp)) {
+			array<System::Byte>^ utf8Bytes = System::Text::Encoding::UTF8->GetBytes(sysOdp);
+			pin_ptr<System::Byte> pinnedBytes = &utf8Bytes[0];
+			odpGracza = std::string(reinterpret_cast<char*>(pinnedBytes), utf8Bytes->Length);
+		}
 
 		if (odpGracza.empty()) return;
 
 		// LOGIKA WIELKIEGO FINA£U
-		(czy_tryb_finalowy)
+		if (czy_tryb_finalowy)
 		{
 			if (aktualny_gracz_finalu == 1) {
 				odpowiedzi_gracz1->push_back(odpGracza);
@@ -379,14 +382,22 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 			else {
 				//gracz musi podac inna odp w finale niz 1 zaweodnik
 				if (!odpowiedzi_gracz1->empty() && numer_pytania_finalu < odpowiedzi_gracz1->size()) {
-					if (runda_aktualna->normalizuj(odpGracza) == runda_aktualna->normalizuj((*odpowiedzi_gracz1)[numer_pytania_finalu])) {
-						PLaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
+					std::string znormalizowanaOdpGracza2 = runda_aktualna->normalizuj(odpGracza);
+					std::string znormalizowanaOdpGracza1 = runda_aktualna->normalizuj((*odpowiedzi_gracz1)[numer_pytania_finalu]);
+					if (znormalizowanaOdpGracza2 == znormalizowanaOdpGracza1) {
 						MessageBox::Show("Taka odpowiedŸ ju¿ pad³a! Podaj inn¹!", "Powtórka", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 						textBoxOdpowiedz->Text = "";
 						return;
 					}
 				}
 				odpowiedzi_gracz2->push_back(odpGracza);
+
+				switch (numer_pytania_finalu) {
+				case 0: labelOdp1->Text = "1. " + sysOdp; break;
+				case 1: labelOdp2->Text = "2. " + sysOdp; break;
+				case 2: labelOdp3->Text = "3. " + sysOdp; break;
+				case 3: labelOdp4->Text = "4. " + sysOdp; break;
+				case 4: labelOdp5->Text = "5. " + sysOdp; break;
 			}
 				numer_pytania_finalu++;
 
@@ -407,7 +418,7 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 						aktualny_gracz_finalu = 2;
 						numer_pytania_finalu = 0;
 						labelBledy->Text = "GRACZ 2";
-						labelPyatnie->Text = "Fina³ - Pytanie 1/5: " + stdToSystemStr((*pytania_finalu)[0].get_tresc());
+						labelPytanie->Text = "Fina³ - Pytanie 1/5: " + stdToSystemStr((*pytania_finalu)[0].get_tresc());
 						textBoxOdpowiedz->Text = "";
 					}
 					else

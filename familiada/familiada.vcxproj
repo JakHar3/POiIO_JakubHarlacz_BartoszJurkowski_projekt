@@ -134,7 +134,6 @@
     <ClCompile Include="familiada.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="TDruzyna.cpp" />
-    <ClCompile Include="TGra.cpp" />
     <ClCompile Include="TPytanie.cpp" />
     <ClCompile Include="TRunda.cpp" />
   </ItemGroup>
@@ -142,7 +141,6 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="TGra.h" />
     <ClInclude Include="TRunda.h" />
     <ClInclude Include="TDruzyna.h" />
     <ClInclude Include="TPytanie.h" />

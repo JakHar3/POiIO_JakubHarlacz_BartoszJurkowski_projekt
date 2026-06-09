@@ -34,9 +34,9 @@ public:
 
     int wartosc_odpowiedzi(std::string odp);
 
+    static std::string normalizuj(std::string tekst);
+
     void wyswietl_stan_final(std::vector<std::string> odp_gracza1,
         std::vector<std::string> odp_gracza2, std::vector<std::vector<TOdpowiedz>> popr_odp_final,
         std::vector<int> pkt);
-private:
-    std::string normalizuj(std::string tekst);
 };

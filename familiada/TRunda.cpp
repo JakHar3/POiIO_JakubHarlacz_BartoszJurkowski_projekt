@@ -202,9 +202,9 @@ int TRunda::wartosc_odpowiedzi(string odp)
     return 0;
 }
 
-void TRunda::wyswietl_stan_final(vector<string> odp_gracza1,
-    vector<string> odp_gracza2, vector<vector<TOdpowiedz>> popr_odp_final,
-    vector<int> pkt)
+void TRunda::wyswietl_stan_final(std::vector<std::string> odp_gracza1,
+    std::vector<std::string> odp_gracza2, std::vector<std::vector<TOdpowiedz>> popr_odp_final,
+    std::vector<int> pkt)
 {
     system("cls");
     cout << endl;

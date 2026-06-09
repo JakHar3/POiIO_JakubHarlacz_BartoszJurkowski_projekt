@@ -2,5 +2,11 @@
 C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\MyForm.h(83,63): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
   (kompilowanie pliku źródłowego „familiada.cpp”)
   
+  MyForm.cpp
+  TDruzyna.cpp
+  TPytanie.cpp
+  TRunda.cpp
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  Generowanie kodu...
   familiada.obj : napotkano moduł MSIL; konsolidowanie przyrostowe jest wyłączone dla modułów MSIL; zostanie wykonana pełna konsolidacja
   familiada.vcxproj -> C:\Users\jharl\Desktop\POiO\projekt_familiada\JakHar3\POiIO_JakubHarlacz_BartoszJurkowski_projekt\familiada\x64\Debug\familiada.exe

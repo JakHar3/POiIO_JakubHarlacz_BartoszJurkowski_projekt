@@ -613,7 +613,7 @@ namespace familiada {
 				labelPunktyDruzyna1->Text = "Czerowni: " + punkty_czerwoni;
 				labelPunktyDruzyna2->Text = "Nibiescy: " + punkty_niebiescy;
 
-				if (numer_rundy >= 4)
+				if (punkty_czerwoni >= 200 || punkty_niebiescy>=200)
 				{
 					UruchomWielkiFinal();
 				}

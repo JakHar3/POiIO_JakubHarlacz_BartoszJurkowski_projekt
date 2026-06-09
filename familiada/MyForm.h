@@ -66,16 +66,21 @@ namespace familiada {
 		int aktualny_gracz_finalu;
 		int numer_pytania_finalu;
 		// Dodanie zmiennych aby dzia³a³ mechanizm kradzie¿y
+		int pula_punktow_rundy;
+		bool faza_pp;
+		int odp_pp_czerwoni;
+		int odp_pp_niebiescy;
+		bool faza_kradziezy;
 
 		std::vector<std::string>* odpowiedzi_gracz1;
 		std::vector<std::string>* odpowiedzi_gracz2;
-		std::vector<int> * punkty_finalowe;
+		std::vector<int>* punkty_finalowe;
 		std::vector<TPytanie>* pytania_finalu;
 
 	private: System::String^ stdToSystemStr(std::string stdStr)
 	{
 		// wyœwietlanie polskich znaków UTF-8
-		return gcnew System::String(stdStr.c_str(),0,stdStr.length(),System::Text::Encoding::UTF8);
+		return gcnew System::String(stdStr.c_str(), 0, stdStr.length(), System::Text::Encoding::UTF8);
 	}
 	private: System::Windows::Forms::Label^ labelPytanie;
 	private: System::Windows::Forms::Label^ labelOdp1;
@@ -89,10 +94,6 @@ namespace familiada {
 	private: System::Windows::Forms::Button^ buttonZatwierdz;
 	private: System::Windows::Forms::Label^ labelBledy;
 
-
-
-
-
 	protected:
 
 	protected:
@@ -101,7 +102,7 @@ namespace familiada {
 		/// <summary>
 		/// Wymagana zmienna projektanta.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -257,13 +258,13 @@ namespace familiada {
 	}
 	private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {}
-private: System::Void labelPunktyDruzyna1_Click(System::Object^ sender, System::EventArgs^ e) {}
-private: System::Void UruchomNowaRunde() {
+	private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void labelPunktyDruzyna1_Click(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void UruchomNowaRunde() {
 		if (baza_pytan->empty()) return;
-		
+
 		delete runda_aktualna;
 		runda_aktualna = new TRunda();
 		*pytanie_aktualne = runda_aktualna->losuj_pytanie(*baza_pytan);
@@ -281,48 +282,57 @@ private: System::Void UruchomNowaRunde() {
 		labelPunktyDruzyna2->Text = "Niebiescy: " + punkty_niebiescy;
 		labelBledy->Text = "B³êdy w rundzie: 0";
 		textBoxOdpowiedz->Text = "";
+
+		pula_punktow_rundy = 0;
+		faza_pp = true;
+		faza_kradziezy = false;
+		odp_pp_czerwoni = -1;
+		odp_pp_niebiescy = -1;
+		MessageBox::Show("Czas na pojedynek przy stoliku!\nOdpowiada kapitan czerownych", "Pojedynek", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		tura_czerownych = true;
+
 	}
-private: System::Void UruchomWielkiFinal() {
-	czy_tryb_finalowy = true;
-	aktualny_gracz_finalu = 1;
-	numer_pytania_finalu = 0;
+	private: System::Void UruchomWielkiFinal() {
+		czy_tryb_finalowy = true;
+		aktualny_gracz_finalu = 1;
+		numer_pytania_finalu = 0;
 
-	odpowiedzi_gracz1->clear();
-	odpowiedzi_gracz2->clear();
-	punkty_finalowe->clear();
-	pytania_finalu->clear();
+		odpowiedzi_gracz1->clear();
+		odpowiedzi_gracz2->clear();
+		punkty_finalowe->clear();
+		pytania_finalu->clear();
 
-	std::vector<TPytanie> kopia_bazy = *baza_pytan;
-	for (int i = 0;i < 5;i++) {
-		if(!kopia_bazy.empty()) {
-			TPytanie p = runda_aktualna->losuj_pytanie(kopia_bazy);
-			pytania_finalu->push_back(p);
+		std::vector<TPytanie> kopia_bazy = *baza_pytan;
+		for (int i = 0;i < 5;i++) {
+			if (!kopia_bazy.empty()) {
+				TPytanie p = runda_aktualna->losuj_pytanie(kopia_bazy);
+				pytania_finalu->push_back(p);
 
-			for (auto it = kopia_bazy.begin(); it != kopia_bazy.end();++it) {
-				kopia_bazy.erase(it);
-				break;
+				for (auto it = kopia_bazy.begin(); it != kopia_bazy.end();++it) {
+					kopia_bazy.erase(it);
+					break;
+				}
 			}
 		}
+		MessageBox::Show("Rozpoczynamy WIELKI FINA£!\nZapraszamy Gracza 1!", "Fina³", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+		labelOdp1->Text = "Pytanie 1: -------";
+		labelOdp2->Text = "Pytanie 2: -------";
+		labelOdp3->Text = "Pytanie 3: -------";
+		labelOdp4->Text = "Pytanie 4: -------";
+		labelOdp5->Text = "Pytanie 5: -------";
+
+		labelPunktyDruzyna1->Text = "Suma punktów: 0";
+		labelPunktyDruzyna2->Text = "";
+		labelBledy->Text = "Gracz 1";
+
+		labelPytanie->Text = "Fina³ - Pytanie 1/5: " + stdToSystemStr((*pytania_finalu)[0].get_tresc());
+		textBoxOdpowiedz->Text = "";
 	}
-	MessageBox::Show("Rozpoczynamy WIELKI FINA£!\nZapraszamy Gracza 1!", "Fina³", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
-	labelOdp1->Text = "Pytanie 1: -------";
-	labelOdp2->Text = "Pytanie 2: -------";
-	labelOdp3->Text = "Pytanie 3: -------";
-	labelOdp4->Text = "Pytanie 4: -------";
-	labelOdp5->Text = "Pytanie 5: -------";
-
-	labelPunktyDruzyna1->Text = "Suma punktów: 0";
-	labelPunktyDruzyna2->Text = "";
-	labelBledy->Text = "Gracz 1";
-
-	labelPytanie->Text = "Fina³ - Pytanie 1/5: " + stdToSystemStr((*pytania_finalu)[0].get_tresc());
-	textBoxOdpowiedz->Text = "";
-	}
-private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		//losowe pytanie
 		srand(static_cast<unsigned int>(time(0)));
-		
+
 		// Tworzymy nowe obiekty w pamieci:
 		baza_pytan = new std::vector<TPytanie>();
 		runda_aktualna = new TRunda();
@@ -333,6 +343,13 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 		punkty_niebiescy = 0;
 		numer_rundy = 1;
 		tura_czerownych = true; // zaczna czerowni
+
+		// Dodanie pojedynku o rozpoczêcie rundy
+		pula_punktow_rundy = 0;
+		faza_pp = true;
+		faza_kradziezy = false;
+		odp_pp_czerwoni = -1;
+		odp_pp_niebiescy = -1;
 
 		// Inicjalizacja trybu finalowego
 		czy_tryb_finalowy = false;
@@ -351,25 +368,25 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 			labelPytanie->Text = "B³¹d: Nie uda³o siê wczytaæ bazy pytañ!";
 		}
 	}
-private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::String^ sysOdp = textBoxOdpowiedz->Text;
 
 		//Konwersja System::String na std::string
 		using namespace System::Runtime::InteropServices;
-		std::string odpGracza = "";
+		std::string odpgracza = "";
 		if (!System::String::IsNullOrEmpty(sysOdp)) {
 			array<System::Byte>^ utf8Bytes = System::Text::Encoding::UTF8->GetBytes(sysOdp);
 			pin_ptr<System::Byte> pinnedBytes = &utf8Bytes[0];
-			odpGracza = std::string(reinterpret_cast<char*>(pinnedBytes), utf8Bytes->Length);
+			odpgracza = std::string(reinterpret_cast<char*>(pinnedBytes), utf8Bytes->Length);
 		}
 
-		if (odpGracza.empty()) return;
+		if (odpgracza.empty()) return;
 
 		// LOGIKA WIELKIEGO FINA£U
 		if (czy_tryb_finalowy)
 		{
 			if (aktualny_gracz_finalu == 1) {
-				odpowiedzi_gracz1->push_back(odpGracza);
+				odpowiedzi_gracz1->push_back(odpgracza);
 
 				switch (numer_pytania_finalu) {
 				case 0: labelOdp1->Text = "1. " + sysOdp; break;
@@ -382,7 +399,7 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 			else {
 				//gracz musi podac inna odp w finale niz 1 zaweodnik
 				if (!odpowiedzi_gracz1->empty() && numer_pytania_finalu < odpowiedzi_gracz1->size()) {
-					std::string znormalizowanaOdpGracza2 = runda_aktualna->normalizuj(odpGracza);
+					std::string znormalizowanaOdpGracza2 = runda_aktualna->normalizuj(odpgracza);
 					std::string znormalizowanaOdpGracza1 = runda_aktualna->normalizuj((*odpowiedzi_gracz1)[numer_pytania_finalu]);
 					if (znormalizowanaOdpGracza2 == znormalizowanaOdpGracza1) {
 						MessageBox::Show("Taka odpowiedŸ ju¿ pad³a! Podaj inn¹!", "Powtórka", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -390,7 +407,7 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 						return;
 					}
 				}
-				odpowiedzi_gracz2->push_back(odpGracza);
+				odpowiedzi_gracz2->push_back(odpgracza);
 
 				switch (numer_pytania_finalu) {
 				case 0: labelOdp1->Text = "1. " + sysOdp; break;
@@ -398,13 +415,14 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 				case 2: labelOdp3->Text = "3. " + sysOdp; break;
 				case 3: labelOdp4->Text = "4. " + sysOdp; break;
 				case 4: labelOdp5->Text = "5. " + sysOdp; break;
+				}
 			}
-				numer_pytania_finalu++;
+			numer_pytania_finalu++;
 
-				if(numer_pytania_finalu<5){
+				if (numer_pytania_finalu < 5) {
 					labelPytanie->Text = "Fina³ - Pytanie " + (numer_pytania_finalu + 1) + "/5: " + stdToSystemStr((*pytania_finalu)[numer_pytania_finalu].get_tresc());
 					textBoxOdpowiedz->Text = "";
-			}
+				}
 				else {
 					if (aktualny_gracz_finalu == 1)
 					{
@@ -427,7 +445,7 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 						int suma_finalowa = 0;
 
 						System::String^ podsumowanie_tekst = "--- WYNIKI WIELKIEGO FINA£U ---\n\n";
-						
+
 						for (int i = 0;i < 5;i++)
 						{
 							TPytanie p = (*pytania_finalu)[i];
@@ -439,7 +457,7 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 							podsumowanie_tekst += "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[i]) + " (" + pkt1 + " pkt)\n";
 							podsumowanie_tekst += "G2: " + stdToSystemStr((*odpowiedzi_gracz2)[i]) + " (" + pkt2 + " pkt)\n";
 						}
-						
+
 						//Wyœwietlanie wyników na planszy gry
 						labelOdp1->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[0]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[0]);
 						labelOdp2->Text = "G1: " + stdToSystemStr((*odpowiedzi_gracz1)[1]) + " | G2: " + stdToSystemStr((*odpowiedzi_gracz2)[1]);
@@ -467,55 +485,145 @@ private: System::Void buttonZatwierdz_Click(System::Object^ sender, System::Even
 				}
 				return;
 		}
-
-		// LOGIKA ZWYK£EJ RUNDY
-		int indeksOdpowiedzi = runda_aktualna->zgadnij(odpGracza, true);
-
-		if (indeksOdpowiedzi != -1) {
-			PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
-			std::vector<TOdpowiedz> listaOdp = pytanie_aktualne->get_odpowiedzi();
-			std::string tekstOdp = listaOdp[indeksOdpowiedzi].tekst + " (" + std::to_string(listaOdp[indeksOdpowiedzi].punkty) + " pkt";
-			System::String^ wyswietl_odp = stdToSystemStr(tekstOdp);
-
-			switch (indeksOdpowiedzi) {
-			case 0: labelOdp1->Text = "1. " + wyswietl_odp; break;
-			case 1: labelOdp2->Text = "2. " + wyswietl_odp; break;
-			case 2: labelOdp3->Text = "3. " + wyswietl_odp; break;
-			case 3: labelOdp4->Text = "4. " + wyswietl_odp; break;
-			case 4: labelOdp5->Text = "5. " + wyswietl_odp; break;
-			}
-
-			if (tura_czerownych) {
-				punkty_czerwoni += listaOdp[indeksOdpowiedzi].punkty;
-				labelPunktyDruzyna1->Text = "Czerowni: " + punkty_czerwoni;
-			}
-			else {
-				punkty_niebiescy += listaOdp[indeksOdpowiedzi].punkty;
-				labelPunktyDruzyna2->Text = "Niebiescy: " + punkty_niebiescy;
-			}
-		}
-		else 
-		{
-			PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
-			int bledy = runda_aktualna->get_liczba_bledow();
-			labelBledy->Text = "B³êdy w rundzie: " + bledy;
-			tura_czerownych = !tura_czerownych; // zmiana tury po b³êdzue
-		}
-		textBoxOdpowiedz->Text = "";
-
-		if (runda_aktualna->czy_koniec() || runda_aktualna->get_liczba_bledow() >= 3) {
-			MessageBox::Show("Koniec rundy " + numer_rundy + "!", "Podsumowanie", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
-			if (numer_rundy >= 3)
+			// FAZA POJEDYNKU PP
+			if (faza_pp)
 			{
-				UruchomWielkiFinal();
+				int indeksOdpowiedzi = runda_aktualna->zgadnij(odpgracza, false);
+				int uzyskane_pkt = 0;
+				if (indeksOdpowiedzi != -1) {
+					std::vector<TOdpowiedz> listaOdp = pytanie_aktualne->get_odpowiedzi();
+					uzyskane_pkt = listaOdp[indeksOdpowiedzi].punkty;
+					pula_punktow_rundy += uzyskane_pkt;
+					std::string tekstOdp = listaOdp[indeksOdpowiedzi].tekst + " (" + std::to_string(uzyskane_pkt) + " pkt";
+					System::String^ wyswietl_odp = stdToSystemStr(tekstOdp);
+					
+					switch (indeksOdpowiedzi) {
+					case 0: labelOdp1->Text = "1. " + wyswietl_odp; break;
+					case 1: labelOdp2->Text = "2. " + wyswietl_odp; break;
+					case 2: labelOdp3->Text = "3. " + wyswietl_odp; break;
+					case 3: labelOdp4->Text = "4. " + wyswietl_odp; break;
+					case 4: labelOdp5->Text = "5. " + wyswietl_odp; break;
+					}
+					PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
+				}
+				else {
+					PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
+				}
+				if (tura_czerownych) {
+					odp_pp_czerwoni = uzyskane_pkt;
+					MessageBox::Show("Teraz odpowiada kapitan NIEBIESKICH!", "Pojedynek", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					tura_czerownych = false;
+					textBoxOdpowiedz->Text = "";
+					return;
+				}
+				else {
+					odp_pp_niebiescy = uzyskane_pkt;
+					if (odp_pp_czerwoni == 0 && odp_pp_niebiescy == 0) {
+						MessageBox::Show("Obaj kapitanowie nie zgadli! Szansê otrzymuj¹ Czerwoni!", "Pojedynek rozstrzygniêty", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+						tura_czerownych = true;
+					}
+					else if (odp_pp_czerwoni >= odp_pp_niebiescy) {
+						MessageBox::Show("Pojedynek wygrywaj¹ Czerwoni i zaczynaj¹ grê!", "Pojedynek rozstrzygniêty", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+						tura_czerownych = true;
+					}
+					else {
+						MessageBox::Show("Pojedynek wygrywaj¹ Niebiescy i zaczynaj¹ grê!", "Pojedynek rozstrzygniêty", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+						tura_czerownych = false;
+					}
+					faza_pp = false;
+					labelBledy->Text = "Pula punktów rundy: " + pula_punktow_rundy + " | B³êdy: 0";
+					textBoxOdpowiedz->Text = "";
+					return;
+				}
+			}
+
+			// FAZA KRADZIE¯Y
+			if (faza_kradziezy) {
+				int indeksOdpowiedzi = runda_aktualna->zgadnij(odpgracza, false);
+				if (indeksOdpowiedzi != -1) {
+					std::vector<TOdpowiedz> listaOdp = pytanie_aktualne->get_odpowiedzi();
+					pula_punktow_rundy += listaOdp[indeksOdpowiedzi].punkty;
+					PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
+					MessageBox::Show("KRADZIE¯ UDANA! Dru¿yna przejmuje ca³¹ pulê: " + pula_punktow_rundy + " pkt!", "Kradzie¿", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+
+					if (tura_czerownych) punkty_czerwoni += pula_punktow_rundy;
+					else punkty_niebiescy += pula_punktow_rundy;
+				}
+				else {
+					PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
+					MessageBox::Show("Z³a odpowiedŸ! Punkty z puli (" + pula_punktow_rundy + " pkt) wêdruj¹ do dru¿yny przeciwnej!", "Kradzie¿ nieudana", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+
+					if (!tura_czerownych) punkty_czerwoni += pula_punktow_rundy;
+					else punkty_niebiescy += pula_punktow_rundy;
+				}
+				labelPunktyDruzyna1->Text = "Czerowni: " + punkty_czerwoni;
+				labelPunktyDruzyna2->Text = "Niebiescy: " + punkty_niebiescy;
+				MessageBox::Show("Koniec rundy " + numer_rundy + "!", "Podsumowanie", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				if (numer_rundy >= 4) UruchomWielkiFinal();
+				else {
+					numer_rundy++;
+					UruchomNowaRunde();
+				}
+				textBoxOdpowiedz->Text = "";
+				return;
+			}
+
+			// LOGIKA ZWYK£EJ RUNDY
+			int indeksOdpowiedzi = runda_aktualna->zgadnij(odpgracza, true);
+			int bledy = runda_aktualna->get_liczba_bledow();
+
+			if (indeksOdpowiedzi != -1) {
+				PlaySound(TEXT("odsloniecie.wav"), NULL, SND_ASYNC);
+				std::vector<TOdpowiedz> listaOdp = pytanie_aktualne->get_odpowiedzi();
+				pula_punktow_rundy += listaOdp[indeksOdpowiedzi].punkty;
+				std::string tekstOdp = listaOdp[indeksOdpowiedzi].tekst + " (" + std::to_string(listaOdp[indeksOdpowiedzi].punkty) + " pkt";
+				System::String^ wyswietl_odp = stdToSystemStr(tekstOdp);
+
+				switch (indeksOdpowiedzi) {
+				case 0: labelOdp1->Text = "1. " + wyswietl_odp; break;
+				case 1: labelOdp2->Text = "2. " + wyswietl_odp; break;
+				case 2: labelOdp3->Text = "3. " + wyswietl_odp; break;
+				case 3: labelOdp4->Text = "4. " + wyswietl_odp; break;
+				case 4: labelOdp5->Text = "5. " + wyswietl_odp; break;
+				}
 			}
 			else
 			{
-				numer_rundy++;
-				UruchomNowaRunde();
+				PlaySound(TEXT("blad.wav"), NULL, SND_ASYNC);
 			}
-		};
+			System::String^ aktualnaDruzyna = tura_czerownych ? "CZEROWNI" : "NIEBIESCY";
+			labelBledy->Text = "Tura: " + aktualnaDruzyna + " | Pula: " + pula_punktow_rundy + " | Bledy: " + bledy;
+			textBoxOdpowiedz->Text = "";
+
+			if (bledy >= 3) {
+				faza_kradziezy = true;
+				tura_czerownych = !tura_czerownych;
+				System::String^ nazwaKradnacych = tura_czerownych ? "CZERWONYCH" : "NIEBIESKICH";
+				MessageBox::Show("3 B³êdy! Szansa kradzie¿y punktów dla dru¿yny " + nazwaKradnacych + "!\nNaradŸcie siê i podajcie odpowiedŸ.", "Kradzie¿ punktów", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				labelBledy->Text = "FAZA KRADZIE¯Y - odpowiada dru¿yna: " + nazwaKradnacych;
+				return;
+			}
+
+			if (runda_aktualna->czy_koniec()) {
+				MessageBox::Show("Wszytskie odpowiedzi odkryte! Dru¿yna zdobywa  " + pula_punktow_rundy + " pkt!", "Koniec rundy", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+
+				if (tura_czerownych) punkty_czerwoni += pula_punktow_rundy;
+				else punkty_niebiescy += pula_punktow_rundy;
+
+				labelPunktyDruzyna1->Text = "Czerowni: " + punkty_czerwoni;
+				labelPunktyDruzyna2->Text = "Nibiescy: " + punkty_niebiescy;
+
+				if (numer_rundy >= 4)
+				{
+					UruchomWielkiFinal();
+				}
+				else
+				{
+					numer_rundy++;
+					UruchomNowaRunde();
+				}
+			}
+		
 	}
-};
+	};
 }
